@@ -16,7 +16,6 @@ import {
 import { IoIosArrowDown } from 'react-icons/io';
 
 const INITIAL_STATE = {
-  username: '',
   email: '',
   passwordOne: '',
   passwordTwo: '',
@@ -54,7 +53,6 @@ class SignUpFormBase extends Component {
       .then(authUser => {
         // Create a user in your Firebase realtime database
         return this.props.firebase.user(authUser.user.uid).set({
-          username,
           email,
           roles,
         });
@@ -86,19 +84,12 @@ class SignUpFormBase extends Component {
   };
 
   render() {
-    const {
-      username,
-      email,
-      passwordOne,
-      passwordTwo,
-      error,
-    } = this.state;
+    const { email, passwordOne, passwordTwo, error } = this.state;
 
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
-      email === '' ||
-      username === '';
+      email === '';
 
     return (
       <Accordion

@@ -16,6 +16,7 @@ import {
 import { IoIosArrowDown } from 'react-icons/io';
 
 const INITIAL_STATE = {
+  username: '',
   email: '',
   passwordOne: '',
   passwordTwo: '',
@@ -84,12 +85,19 @@ class SignUpFormBase extends Component {
   };
 
   render() {
-    const { email, passwordOne, passwordTwo, error } = this.state;
+    const {
+      username,
+      email,
+      passwordOne,
+      passwordTwo,
+      error,
+    } = this.state;
 
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
-      email === '';
+      email === '' ||
+      username === '';
 
     return (
       <Accordion

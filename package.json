@@ -1,0 +1,17 @@
+{
+  "name": "react-gastby-firebase-authentication",
+  "description": "Gatsby hello world starter",
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "firebase": "^5.6.0",
+    "gatsby": "^2.0.33",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
+    "recompose": "^0.30.0"
+  }
+}

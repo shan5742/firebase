@@ -110,49 +110,6 @@ class SignInFormBase extends Component {
             </AccordionItemPanel>
           </AccordionItem>
         </div>
-        <AccordionItem className="pt-4">
-          <AccordionItemHeading>
-            <AccordionItemButton className="outline-none">
-              <div className="flex flex-row justify-between px-6">
-                <h1 class="text-3xl font-medium text-center mb-4">
-                  Sign Up
-                </h1>
-                <IoIosArrowDown />
-              </div>
-            </AccordionItemButton>
-          </AccordionItemHeading>
-
-          <AccordionItemPanel className="px-8">
-            <form>
-              <input
-                type="text"
-                className="block border border-grey-light w-full p-3 rounded mb-4"
-                name="username"
-                id="username"
-                placeholder="Email"
-              />
-              <input
-                type="password"
-                className="block border border-grey-light w-full p-3 rounded mb-4"
-                name="password"
-                placeholder="Password"
-              />
-              <input
-                type="password"
-                className="block border border-grey-light w-full p-3 rounded mb-4"
-                name="confirm_password"
-                placeholder="Confirm Password"
-              />
-
-              <button
-                type="submit"
-                className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
-              >
-                Create Account
-              </button>
-            </form>
-          </AccordionItemPanel>
-        </AccordionItem>
       </Accordion>
     );
   }

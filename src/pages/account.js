@@ -13,16 +13,7 @@ import LoginManagement from '../components/LoginManagement';
 
 const AccountPageBase = () => (
   <Fragment>
-    <AuthUserContext.Consumer>
-      {authUser => (
-        <div>
-          <h1>Account: {authUser.email}</h1>
-          <PasswordForgetForm />
-          <PasswordChangeForm />
-          <LoginManagement authUser={authUser} />
-        </div>
-      )}
-    </AuthUserContext.Consumer>
+    <h1 className="text-black">You are signed in</h1>
   </Fragment>
 );
 

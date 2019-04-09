@@ -5,6 +5,16 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel,
+} from 'react-accessible-accordion';
+
+import { IoIosArrowDown } from 'react-icons/io';
+
 const INITIAL_STATE = {
   username: '',
   email: '',
@@ -32,7 +42,7 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne, isAdmin } = this.state;
+    const { email, passwordOne, isAdmin } = this.state;
     const roles = {};
 
     if (isAdmin) {
@@ -81,7 +91,6 @@ class SignUpFormBase extends Component {
       email,
       passwordOne,
       passwordTwo,
-      isAdmin,
       error,
     } = this.state;
 
@@ -92,60 +101,63 @@ class SignUpFormBase extends Component {
       username === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="username"
-          value={username}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <label>
-          Admin:
-          <input
-            name="isAdmin"
-            type="checkbox"
-            checked={isAdmin}
-            onChange={this.onChangeCheckbox}
-          />
-        </label>
-        <button disabled={isInvalid} type="submit">
-          Sign Up
-        </button>
+      <Accordion
+        allowZeroExpanded="true"
+        allowMultipleExpanded="true"
+      >
+        <AccordionItem className="pt-4">
+          <AccordionItemHeading>
+            <AccordionItemButton className="outline-none">
+              <div className="flex flex-row justify-between px-6">
+                <h1 class="text-3xl font-medium text-center mb-4">
+                  Sign Up
+                </h1>
+                <IoIosArrowDown />
+              </div>
+            </AccordionItemButton>
+          </AccordionItemHeading>
 
-        {error && <p>{error.message}</p>}
-      </form>
+          <AccordionItemPanel className="px-8">
+            <form onSubmit={this.onSubmit}>
+              <input
+                className="block border border-grey-light w-full p-3 rounded mb-4"
+                name="email"
+                value={email}
+                onChange={this.onChange}
+                type="text"
+                placeholder="Email Address"
+              />
+              <input
+                className="block border border-grey-light w-full p-3 rounded mb-4"
+                name="passwordOne"
+                value={passwordOne}
+                onChange={this.onChange}
+                type="password"
+                placeholder="Password"
+              />
+              <input
+                className="block border border-grey-light w-full p-3 rounded mb-4"
+                name="passwordTwo"
+                value={passwordTwo}
+                onChange={this.onChange}
+                type="password"
+                placeholder="Confirm Password"
+              />
+              <button
+                className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
+                disabled={isInvalid}
+                type="submit"
+              >
+                Sign Up
+              </button>
+
+              {error && <p>{error.message}</p>}
+            </form>
+          </AccordionItemPanel>
+        </AccordionItem>
+      </Accordion>
     );
   }
 }
 
-const SignUpLink = () => (
-  <p>
-    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-  </p>
-);
-
 export default withFirebase(SignUpFormBase);
-
-export { SignUpLink };

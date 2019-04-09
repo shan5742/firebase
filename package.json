@@ -9,9 +9,20 @@
   },
   "dependencies": {
     "firebase": "^5.6.0",
-    "gatsby": "^2.0.33",
+    "gatsby": "^2.3.15",
+    "gatsby-plugin-manifest": "^2.0.24",
+    "gatsby-plugin-postcss": "^2.0.7",
+    "gatsby-plugin-purgecss": "^3.1.1",
+    "gatsby-plugin-react-helmet": "^3.0.12",
+    "prop-types": "^15.7.2",
     "react": "^16.5.1",
+    "react-accessible-accordion": "^3.0.0",
     "react-dom": "^16.5.1",
+    "react-helmet": "^5.2.0",
+    "react-icons": "^3.5.0",
     "recompose": "^0.30.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^0.7.4"
   }
 }

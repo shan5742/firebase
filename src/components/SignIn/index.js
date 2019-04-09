@@ -4,6 +4,16 @@ import { navigate } from 'gatsby';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel,
+} from 'react-accessible-accordion';
+
+import { IoIosArrowDown } from 'react-icons/io';
+
 const INITIAL_STATE = {
   email: '',
   password: '',
@@ -34,7 +44,7 @@ class SignInFormBase extends Component {
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        navigate(ROUTES.HOME);
+        navigate(ROUTES.ACCOUNT);
       })
       .catch(error => {
         this.setState({ error });
@@ -53,177 +63,101 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="password"
-          value={password}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign In
-        </button>
+      <Accordion
+        allowZeroExpanded="true"
+        allowMultipleExpanded="true"
+      >
+        <div className="border-b border-black">
+          <AccordionItem className="pb-2">
+            <AccordionItemHeading>
+              <AccordionItemButton className="outline-none">
+                <div className="flex flex-row justify-between px-6">
+                  <h1 class="mb-8 text-3xl font-medium text-center">
+                    Sign In
+                  </h1>
+                  <IoIosArrowDown />
+                </div>
+              </AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel className="px-8">
+              <form onSubmit={this.onSubmit}>
+                <input
+                  type="text"
+                  value={email}
+                  onChange={this.onChange}
+                  className="block border border-grey-light w-full p-3 rounded mb-4"
+                  name="email"
+                  placeholder="Email Address"
+                />
+                <input
+                  type="password"
+                  className="block border border-grey-light w-full p-3 rounded mb-4"
+                  name="password"
+                  value={password}
+                  placeholder="Password"
+                  onChange={this.onChange}
+                />
+                <button
+                  type="submit"
+                  disabled={isInvalid}
+                  className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
+                >
+                  Sign In
+                </button>
 
-        {error && <p>{error.message}</p>}
-      </form>
-    );
-  }
-}
+                {error && <p>{error.message}</p>}
+              </form>
+            </AccordionItemPanel>
+          </AccordionItem>
+        </div>
+        <AccordionItem className="pt-4">
+          <AccordionItemHeading>
+            <AccordionItemButton className="outline-none">
+              <div className="flex flex-row justify-between px-6">
+                <h1 class="text-3xl font-medium text-center mb-4">
+                  Sign Up
+                </h1>
+                <IoIosArrowDown />
+              </div>
+            </AccordionItemButton>
+          </AccordionItemHeading>
 
-class SignInGoogleBase extends Component {
-  constructor(props) {
-    super(props);
+          <AccordionItemPanel className="px-8">
+            <form>
+              <input
+                type="text"
+                className="block border border-grey-light w-full p-3 rounded mb-4"
+                name="username"
+                id="username"
+                placeholder="Email"
+              />
+              <input
+                type="password"
+                className="block border border-grey-light w-full p-3 rounded mb-4"
+                name="password"
+                placeholder="Password"
+              />
+              <input
+                type="password"
+                className="block border border-grey-light w-full p-3 rounded mb-4"
+                name="confirm_password"
+                placeholder="Confirm Password"
+              />
 
-    this.state = { error: null };
-  }
-
-  onSubmit = event => {
-    this.props.firebase
-      .doSignInWithGoogle()
-      .then(socialAuthUser => {
-        // Create a user in your Firebase Realtime Database too
-        return this.props.firebase.user(socialAuthUser.user.uid).set({
-          username: socialAuthUser.user.displayName,
-          email: socialAuthUser.user.email,
-          roles: {},
-        });
-      })
-      .then(() => {
-        this.setState({ error: null });
-        navigate(ROUTES.HOME);
-      })
-      .catch(error => {
-        if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
-          error.message = ERROR_MSG_ACCOUNT_EXISTS;
-        }
-
-        this.setState({ error });
-      });
-
-    event.preventDefault();
-  };
-
-  render() {
-    const { error } = this.state;
-
-    return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Google</button>
-
-        {error && <p>{error.message}</p>}
-      </form>
-    );
-  }
-}
-
-class SignInFacebookBase extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { error: null };
-  }
-
-  onSubmit = event => {
-    this.props.firebase
-      .doSignInWithFacebook()
-      .then(socialAuthUser => {
-        // Create a user in your Firebase Realtime Database too
-        return this.props.firebase.user(socialAuthUser.user.uid).set({
-          username: socialAuthUser.additionalUserInfo.profile.name,
-          email: socialAuthUser.additionalUserInfo.profile.email,
-          roles: {},
-        });
-      })
-      .then(() => {
-        this.setState({ error: null });
-        navigate(ROUTES.HOME);
-      })
-      .catch(error => {
-        if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
-          error.message = ERROR_MSG_ACCOUNT_EXISTS;
-        }
-
-        this.setState({ error });
-      });
-
-    event.preventDefault();
-  };
-
-  render() {
-    const { error } = this.state;
-
-    return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Facebook</button>
-
-        {error && <p>{error.message}</p>}
-      </form>
-    );
-  }
-}
-
-class SignInTwitterBase extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { error: null };
-  }
-
-  onSubmit = event => {
-    this.props.firebase
-      .doSignInWithTwitter()
-      .then(socialAuthUser => {
-        // Create a user in your Firebase Realtime Database too
-        return this.props.firebase.user(socialAuthUser.user.uid).set({
-          username: socialAuthUser.additionalUserInfo.profile.name,
-          email: socialAuthUser.additionalUserInfo.profile.email,
-          roles: {},
-        });
-      })
-      .then(() => {
-        this.setState({ error: null });
-        navigate(ROUTES.HOME);
-      })
-      .catch(error => {
-        if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
-          error.message = ERROR_MSG_ACCOUNT_EXISTS;
-        }
-
-        this.setState({ error });
-      });
-
-    event.preventDefault();
-  };
-
-  render() {
-    const { error } = this.state;
-
-    return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Twitter</button>
-
-        {error && <p>{error.message}</p>}
-      </form>
+              <button
+                type="submit"
+                className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
+              >
+                Create Account
+              </button>
+            </form>
+          </AccordionItemPanel>
+        </AccordionItem>
+      </Accordion>
     );
   }
 }
 
 const SignInForm = withFirebase(SignInFormBase);
 
-const SignInGoogle = withFirebase(SignInGoogleBase);
-
-const SignInFacebook = withFirebase(SignInFacebookBase);
-
-const SignInTwitter = withFirebase(SignInTwitterBase);
-
 export default SignInForm;
-
-export { SignInGoogle, SignInFacebook, SignInTwitter };

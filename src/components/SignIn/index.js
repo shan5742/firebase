@@ -3,16 +3,6 @@ import { navigate } from 'gatsby';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-import PasswordForget from '../../components/PasswordForget';
-import {
-  Accordion,
-  AccordionItem,
-  AccordionItemHeading,
-  AccordionItemButton,
-  AccordionItemPanel,
-} from 'react-accessible-accordion';
-
-import { IoIosArrowDown } from 'react-icons/io';
 
 const INITIAL_STATE = {
   email: '',
@@ -63,60 +53,33 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
 
     return (
-      <Accordion
-        allowZeroExpanded="true"
-        allowMultipleExpanded="false"
-      >
-        <div className="border-b border-black">
-          <AccordionItem className="pb-2">
-            <AccordionItemHeading>
-              <AccordionItemButton className="outline-none">
-                <div className="flex flex-row justify-between px-6">
-                  <h1 class="mb-8 text-3xl font-medium text-center">
-                    Sign In
-                  </h1>
-                  <IoIosArrowDown />
-                </div>
-              </AccordionItemButton>
-            </AccordionItemHeading>
-            <AccordionItemPanel className="px-8">
-              <form onSubmit={this.onSubmit}>
-                <input
-                  type="text"
-                  value={email}
-                  onChange={this.onChange}
-                  className="block border border-grey-light w-full p-3 rounded mb-4"
-                  name="email"
-                  placeholder="Email Address"
-                />
-                <input
-                  type="password"
-                  className="block border border-grey-light w-full p-3 rounded mb-4"
-                  name="password"
-                  value={password}
-                  placeholder="Password"
-                  onChange={this.onChange}
-                />
-                <button
-                  type="submit"
-                  disabled={isInvalid}
-                  className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
-                >
-                  Sign In
-                </button>
+      <form onSubmit={this.onSubmit}>
+        <input
+          type="text"
+          value={email}
+          onChange={this.onChange}
+          className="block border border-grey-light w-full p-3 rounded mb-4"
+          name="email"
+          placeholder="Email Address"
+        />
+        <input
+          type="password"
+          className="block border border-grey-light w-full p-3 rounded mb-4"
+          name="password"
+          value={password}
+          placeholder="Password"
+          onChange={this.onChange}
+        />
+        <button
+          type="submit"
+          disabled={isInvalid}
+          className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
+        >
+          Sign In
+        </button>
 
-                {error && <p>{error.message}</p>}
-              </form>
-              <div className="flex flex-row justify-start pl-6 my-4">
-                <h2 className=" text-lg">Forgot your password?</h2>
-              </div>
-              <div className="mb-4">
-                <PasswordForget />
-              </div>
-            </AccordionItemPanel>
-          </AccordionItem>
-        </div>
-      </Accordion>
+        {error && <p>{error.message}</p>}
+      </form>
     );
   }
 }

@@ -2,20 +2,68 @@ import React, { Fragment } from 'react';
 import SignInForm from '../components/SignIn/index';
 import SignUpForm from '../components/SignUp/index';
 import Layout from '../components/layout';
+import PasswordForget from '../components/PasswordForget';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel,
+} from 'react-accessible-accordion';
+
+import { IoIosArrowDown } from 'react-icons/io';
 
 const LandingPage = () => (
-  <Fragment>
-    <SignInForm />
-    <SignUpForm />
-  </Fragment>
-);
-
-export default () => (
   <Layout>
     <div class="container h-screen max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
       <div class="bg-white py-8 rounded shadow-md text-black w-full border border-bottom-black">
-        <LandingPage />
+        <Accordion
+          allowZeroExpanded="true"
+          allowMultipleExpanded={false}
+        >
+          <div className="border-b border-black">
+            <AccordionItem className="pb-2">
+              <AccordionItemHeading>
+                <AccordionItemButton className="outline-none">
+                  <div className="flex flex-row justify-between px-6">
+                    <h1 class="mb-8 text-3xl font-medium text-center">
+                      Sign In
+                    </h1>
+                    <IoIosArrowDown />
+                  </div>
+                </AccordionItemButton>
+              </AccordionItemHeading>
+              <AccordionItemPanel className="px-8">
+                <SignInForm />
+                <div className="flex flex-row justify-start pl-6 my-4">
+                  <h2 className=" text-lg">Forgot your password?</h2>
+                </div>
+                <div className="mb-4">
+                  <PasswordForget />
+                </div>
+              </AccordionItemPanel>
+            </AccordionItem>
+          </div>
+          <AccordionItem>
+            <AccordionItemHeading>
+              <AccordionItemButton className="outline-none">
+                <div className="flex flex-row justify-between px-6">
+                  <h1 class="text-3xl font-medium text-center mb-4">
+                    Sign Up
+                  </h1>
+                  <IoIosArrowDown />
+                </div>
+              </AccordionItemButton>
+            </AccordionItemHeading>
+
+            <AccordionItemPanel className="px-8">
+              <SignUpForm />
+            </AccordionItemPanel>
+          </AccordionItem>
+        </Accordion>
       </div>
     </div>
   </Layout>
 );
+
+export default LandingPage;

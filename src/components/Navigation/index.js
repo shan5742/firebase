@@ -19,34 +19,48 @@ const Navigation = () => (
 );
 
 const NavigationAuth = ({ authUser }) => (
-  <ul>
-    <li>
-      <Link to={ROUTES.LANDING}>Landing</Link>
+  <ul className="list-reset flex w-screen justify-around px-16 py-8 text-lg">
+    <li className="mr-6">
+      <Link
+        to={ROUTES.SUBMIT_RESPONSE}
+        className="text-grey-darker hover:text-grey-darkest no-underline"
+      >
+        Submit Response
+      </Link>
     </li>
-    <li>
-      <Link to={ROUTES.HOME}>Home</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.ACCOUNT}>Account</Link>
+    <li className="mr-6">
+      <Link
+        to={ROUTES.MY_RESPONSES}
+        className="text-grey-darker hover:text-grey-darkest no-underline"
+      >
+        MY Responses
+      </Link>
     </li>
     {!!authUser.roles[ROLES.ADMIN] && (
-      <li>
-        <Link to={ROUTES.ADMIN}>Admin</Link>
+      <li className="mr-6">
+        <Link
+          to={ROUTES.ADMIN}
+          className="text-grey-darker hover:text-grey-darkest no-underline"
+        >
+          All Responses
+        </Link>
       </li>
     )}
-    <li>
+    <li className="mr-6">
       <SignOutButton />
     </li>
   </ul>
 );
 
 const NavigationNonAuth = () => (
-  <ul>
+  <ul className="list-reset flex justify-between px-16 py-8 text-2xl ">
     <li>
-      <Link to={ROUTES.LANDING}>Landing</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.SIGN_IN}>Sign In</Link>
+      <Link
+        to={ROUTES.LANDING}
+        className="text-grey-darker hover:text-grey-darkest no-underline"
+      >
+        HOME
+      </Link>
     </li>
   </ul>
 );

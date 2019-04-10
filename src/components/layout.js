@@ -30,10 +30,7 @@ class Layout extends Component {
 }
 
 const AppWithAuthentication = withAuthentication(({ children }) => (
-  <Fragment>
-    <hr />
-    {children}
-  </Fragment>
+  <Fragment>{children}</Fragment>
 ));
 
 export default Layout;

@@ -3,7 +3,7 @@ import { navigate } from 'gatsby';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-
+import PasswordForget from '../../components/PasswordForget';
 import {
   Accordion,
   AccordionItem,
@@ -44,7 +44,7 @@ class SignInFormBase extends Component {
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        navigate(ROUTES.TEST);
+        navigate(ROUTES.SUBMIT_RESPONSE);
       })
       .catch(error => {
         this.setState({ error });
@@ -65,7 +65,7 @@ class SignInFormBase extends Component {
     return (
       <Accordion
         allowZeroExpanded="true"
-        allowMultipleExpanded="true"
+        allowMultipleExpanded="false"
       >
         <div className="border-b border-black">
           <AccordionItem className="pb-2">
@@ -107,6 +107,12 @@ class SignInFormBase extends Component {
 
                 {error && <p>{error.message}</p>}
               </form>
+              <div className="flex flex-row justify-start pl-6 my-4">
+                <h2 className=" text-lg">Forgot your password?</h2>
+              </div>
+              <div className="mb-4">
+                <PasswordForget />
+              </div>
             </AccordionItemPanel>
           </AccordionItem>
         </div>

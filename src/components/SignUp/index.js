@@ -3,7 +3,6 @@ import { Link, navigate } from 'gatsby';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-import * as ROLES from '../../constants/roles';
 
 import {
   Accordion,
@@ -16,11 +15,9 @@ import {
 import { IoIosArrowDown } from 'react-icons/io';
 
 const INITIAL_STATE = {
-  username: '',
   email: '',
   passwordOne: '',
   passwordTwo: '',
-  isAdmin: false,
   error: null,
 };
 
@@ -42,12 +39,7 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { email, passwordOne, isAdmin } = this.state;
-    const roles = {};
-
-    if (isAdmin) {
-      roles[ROLES.ADMIN] = ROLES.ADMIN;
-    }
+    const { email, passwordOne } = this.state;
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -55,7 +47,6 @@ class SignUpFormBase extends Component {
         // Create a user in your Firebase realtime database
         return this.props.firebase.user(authUser.user.uid).set({
           email,
-          roles,
         });
       })
       .then(() => {
@@ -63,7 +54,7 @@ class SignUpFormBase extends Component {
       })
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        navigate(ROUTES.HOME);
+        navigate(ROUTES.REDIRECT);
       })
       .catch(error => {
         if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
@@ -85,24 +76,17 @@ class SignUpFormBase extends Component {
   };
 
   render() {
-    const {
-      username,
-      email,
-      passwordOne,
-      passwordTwo,
-      error,
-    } = this.state;
+    const { email, passwordOne, passwordTwo, error } = this.state;
 
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
-      email === '' ||
-      username === '';
+      email === '';
 
     return (
       <Accordion
         allowZeroExpanded="true"
-        allowMultipleExpanded="true"
+        allowMultipleExpanded="false"
       >
         <AccordionItem className="pt-4">
           <AccordionItemHeading>

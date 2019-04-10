@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
@@ -23,6 +23,7 @@ class PasswordForgetForm extends Component {
       .doPasswordReset(email)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
+        navigate(ROUTES.RESET);
       })
       .catch(error => {
         this.setState({ error });
@@ -48,8 +49,13 @@ class PasswordForgetForm extends Component {
           onChange={this.onChange}
           type="text"
           placeholder="Email Address"
+          className="block border border-grey-light w-full p-3 rounded mb-4"
         />
-        <button disabled={isInvalid} type="submit">
+        <button
+          className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
+          disabled={isInvalid}
+          type="submit"
+        >
           Reset My Password
         </button>
 
@@ -59,12 +65,4 @@ class PasswordForgetForm extends Component {
   }
 }
 
-const PasswordForgetLink = () => (
-  <p>
-    <Link to={ROUTES.PASSWORD_FORGET}>Forgot Password?</Link>
-  </p>
-);
-
 export default withFirebase(PasswordForgetForm);
-
-export { PasswordForgetLink };

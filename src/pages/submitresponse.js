@@ -138,7 +138,7 @@ export default class SubmitResponse extends Component {
             </div>
             <button
               class="bg-green hover:bg-green-dark text-white text-xl font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
-              type="button"
+              type="submit"
             >
               Submit
             </button>

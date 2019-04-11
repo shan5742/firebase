@@ -12,6 +12,9 @@ import {
 } from 'react-accessible-accordion';
 
 import { IoIosArrowDown } from 'react-icons/io';
+import * as firebase from 'firebase';
+
+//const emailList = firebase.storgae().ref('emailList');
 
 const LandingPage = () => (
   <Layout>

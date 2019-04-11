@@ -1,8 +1,33 @@
 import React, { Component } from 'react';
 import Navigation from '../components/Navigation/index';
 import Layout from '../components/layout';
+import * as firebase from 'firebase';
 
 export default class myresponses extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      responses: [],
+    };
+  }
+  componentDidMount() {
+    const myResponses = firebase.database().ref('response');
+    myResponses.on('value', snapshot => {
+      let responses = snapshot.val();
+      let newState = [];
+      for (let response in responses) {
+        newState.push({
+          id: response,
+          name: responses[response].name,
+          rating: responses[response].rating,
+          preference: responses[response].preference,
+        });
+      }
+      this.setState({
+        responses: newState,
+      });
+    });
+  }
   render() {
     return (
       <Layout>
@@ -26,39 +51,21 @@ export default class myresponses extends Component {
               </tr>
             </thead>
             <tbody>
-              <tr className="hover:bg-blue-lightest">
-                <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest ">
-                  John
-                </td>
-                <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
-                  3
-                </td>
-                <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
-                  Sam
-                </td>
-              </tr>
-              <tr className="hover:bg-blue-lightest">
-                <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest">
-                  Jane
-                </td>
-                <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
-                  5
-                </td>
-                <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
-                  Sam
-                </td>
-              </tr>
-              <tr className="hover:bg-blue-lightest">
-                <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest">
-                  Sam
-                </td>
-                <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
-                  4
-                </td>
-                <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
-                  Jane
-                </td>
-              </tr>
+              {this.state.responses.map(response => {
+                return (
+                  <tr className="hover:bg-blue-lightest">
+                    <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest ">
+                      {response.name}
+                    </td>
+                    <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
+                      {response.rating}
+                    </td>
+                    <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
+                      {response.preference}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

@@ -1,3 +1,8 @@
+import 'firebase/firestore';
+import 'firebase/auth';
+import 'firebase/storage';
+import 'firebase/database';
+
 const config = {
   apiKey: 'AIzaSyAVKrix04lJGKFQOKLwCV7iPo7vLCC3_fM',
   authDomain: 'survey-party.firebaseapp.com',

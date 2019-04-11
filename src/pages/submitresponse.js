@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import Navigation from '../components/Navigation/index';
 import Layout from '../components/layout';
-import firebase from '../components/Firebase/firebase';
-require('firebase/database');
+import * as firebase from 'firebase';
 export default class SubmitResponse extends Component {
   constructor() {
     super();
     this.state = {
-      name: 'John',
-      rating: '0',
-      preference: 'Chris',
+      name: '',
+      rating: '',
+      preference: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

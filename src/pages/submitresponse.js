@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Navigation from '../components/Navigation/index';
 import Layout from '../components/layout';
 import firebase from '../components/Firebase/firebase';
-
 export default class SubmitResponse extends Component {
   constructor() {
     super();

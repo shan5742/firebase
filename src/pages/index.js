@@ -12,11 +12,11 @@ import {
 } from 'react-accessible-accordion';
 
 import { IoIosArrowDown } from 'react-icons/io';
-import * as firebase from 'firebase';
+import { withFirebase } from '../components/Firebase';
 
-//const emailList = firebase.storgae().ref('emailList');
+//const emailList = firebase.firestore().collection('emailList');
 
-const LandingPage = () => (
+const LandingPage = props => (
   <Layout>
     <div class="container h-screen max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
       <div class="bg-white py-8 rounded shadow-md text-black w-full border border-bottom-black">
@@ -72,4 +72,4 @@ const LandingPage = () => (
   </Layout>
 );
 
-export default LandingPage;
+export default withFirebase(LandingPage);

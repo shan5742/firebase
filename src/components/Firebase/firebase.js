@@ -25,6 +25,7 @@ class Firebase {
 
     this.auth = app.auth();
     this.db = app.database();
+    this.firestore = app.firestore();
 
     /* Social Sign In Method Provider */
 
@@ -99,9 +100,9 @@ class Firebase {
 
 let firebase;
 
-function getFirebase(app, auth, database) {
+function getFirebase(app, auth, database, firestore) {
   if (!firebase) {
-    firebase = new Firebase(app, auth, database);
+    firebase = new Firebase(app, auth, database, firestore);
   }
 
   return firebase;

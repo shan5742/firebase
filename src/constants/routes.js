@@ -7,5 +7,5 @@ export const ADMIN = '/admin';
 export const ADMIN_DETAILS = '/admin/:id';
 export const SUBMIT_RESPONSE = '/submitresponse';
 export const REDIRECT = '/redirect';
-export const MY_RESPONSES = './myresponses';
-export const RESET = './reset';
+export const MY_RESPONSES = '/myresponses';
+export const RESET = '/reset';

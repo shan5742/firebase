@@ -29,32 +29,45 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
+    event.preventDefault();
+
     const { email, passwordOne } = this.state;
 
-    this.props.firebase
-      .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(authUser => {
-        // Create a user in your Firebase realtime database
-        return this.props.firebase.user(authUser.user.uid).set({
-          email,
-        });
-      })
-      .then(() => {
-        return this.props.firebase.doSendEmailVerification();
-      })
-      .then(() => {
-        this.setState({ ...INITIAL_STATE });
-        navigate(ROUTES.REDIRECT);
-      })
-      .catch(error => {
-        if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
-          error.message = ERROR_MSG_ACCOUNT_EXISTS;
+    this.props.firebase.firestore
+      .collection('emailList')
+      .where('email', '==', email)
+      .get()
+      .then(docsRef => {
+        if (!docsRef.empty) {
+          docsRef.docs.map(docRef => {
+            this.props.firebase
+              .doCreateUserWithEmailAndPassword(email, passwordOne)
+              .then(authUser => {
+                // Create a user in your Firebase realtime database
+                return this.props.firebase
+                  .user(authUser.user.uid)
+                  .set({
+                    email,
+                  });
+              })
+              .then(() => {
+                return this.props.firebase.doSendEmailVerification();
+              })
+              .then(() => {
+                this.setState({ ...INITIAL_STATE });
+                navigate(ROUTES.REDIRECT);
+              })
+              .catch(error => {
+                if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
+                  error.message = ERROR_MSG_ACCOUNT_EXISTS;
+                }
+                this.setState({ error });
+              });
+          });
+        } else {
+          console.log('No Result');
         }
-
-        this.setState({ error });
       });
-
-    event.preventDefault();
   };
 
   onChange = event => {
@@ -100,7 +113,7 @@ class SignUpFormBase extends Component {
           placeholder="Confirm Password"
         />
         <button
-          className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
+          className="w-full text-center py-3 rounded text-white hover:bg-green-dark focus:outline-none my-1 bg-green"
           disabled={isInvalid}
           type="submit"
         >

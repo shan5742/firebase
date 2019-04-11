@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import SignInForm from '../components/SignIn/index';
 import SignUpForm from '../components/SignUp/index';
 import Layout from '../components/layout';
@@ -18,11 +18,12 @@ const LandingPage = () => (
     <div class="container h-screen max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
       <div class="bg-white py-8 rounded shadow-md text-black w-full border border-bottom-black">
         <Accordion
-          allowZeroExpanded="true"
+          allowZeroExpanded={false}
           allowMultipleExpanded={false}
+          /* preExpanded="open" */
         >
           <div className="border-b border-black">
-            <AccordionItem className="pb-2">
+            <AccordionItem uuid="open" className="pb-2">
               <AccordionItemHeading>
                 <AccordionItemButton className="outline-none">
                   <div className="flex flex-row justify-between px-6">
@@ -48,10 +49,12 @@ const LandingPage = () => (
             <AccordionItemHeading>
               <AccordionItemButton className="outline-none">
                 <div className="flex flex-row justify-between px-6">
-                  <h1 class="text-3xl font-medium text-center mb-4">
+                  <h1 class="text-3xl font-medium text-center mb-4 mt-4">
                     Sign Up
                   </h1>
-                  <IoIosArrowDown />
+                  <div className="mt-4">
+                    <IoIosArrowDown />
+                  </div>
                 </div>
               </AccordionItemButton>
             </AccordionItemHeading>

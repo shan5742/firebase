@@ -1,8 +1,41 @@
 import React, { Component } from 'react';
 import Navigation from '../components/Navigation/index';
 import Layout from '../components/layout';
+import firebase from '../components/Firebase/firebase';
 
 export default class SubmitResponse extends Component {
+  constructor() {
+    super();
+    this.state = {
+      name: 'John',
+      rating: '0',
+      preference: 'Chris',
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const responseSubmission = firebase.database().ref('response');
+    const submission = {
+      name: this.state.name,
+      rating: this.state.rating,
+      preference: this.state.preference,
+    };
+    responseSubmission.push(submission);
+    this.setState({
+      name: '',
+      rating: '',
+      preference: '',
+    });
+  }
+
   render() {
     return (
       <Layout>
@@ -10,7 +43,10 @@ export default class SubmitResponse extends Component {
         <div className="flex flex-col flex-1 max-w-xl mx-auto px-4 py-8 md:p-8 w-full h-screen w-screen items-center">
           <h1 className="mt-16">Submit Response</h1>
           <h3>Please fill out the form below</h3>
-          <form className="w-full max-w-sm mt-16">
+          <form
+            onSubmit={this.handleSubmit}
+            className="w-full max-w-sm mt-16"
+          >
             <div className="md:flex md:items-center mb-6 ">
               <div className="md:w-1/3 mr-8">
                 <label className="block text-grey-dark font-bold md:text-right mb-1 md:mb-0 mr-8">
@@ -21,10 +57,13 @@ export default class SubmitResponse extends Component {
                 <select
                   class="block appearance-none w-32 bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey"
                   id="grid-state"
+                  name="name"
+                  onChange={this.handleChange}
+                  value={this.state.name}
                 >
-                  <option>John</option>
-                  <option>Sam</option>
-                  <option>Jane</option>
+                  <option value="John">John</option>
+                  <option value="Sam">Sam</option>
+                  <option value="Jane">Jane</option>
                 </select>
                 <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
                   <svg
@@ -47,13 +86,16 @@ export default class SubmitResponse extends Component {
                 <select
                   class="block appearance-none w-32 bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey"
                   id="grid-state"
+                  name="rating"
+                  onChange={this.handleChange}
+                  value={this.state.rating}
                 >
-                  <option>0</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
                 </select>
                 <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
                   <svg
@@ -76,10 +118,13 @@ export default class SubmitResponse extends Component {
                 <select
                   class="block appearance-none w-32 bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey"
                   id="grid-state"
+                  name="preference"
+                  onChange={this.handleChange}
+                  value={this.state.preference}
                 >
-                  <option>Sam</option>
-                  <option>John</option>
-                  <option>Jane</option>
+                  <option value="Chris">Chris</option>
+                  <option value="Rob">Rob</option>
+                  <option value="Sue">Sue</option>
                 </select>
                 <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
                   <svg

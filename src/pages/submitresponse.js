@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navigation from '../components/Navigation/index';
 import Layout from '../components/layout';
 import * as firebase from 'firebase';
-import { withFirebase } from '../components/Firebase';
+
 class SubmitResponse extends Component {
   constructor(props) {
     super(props);
@@ -10,27 +10,33 @@ class SubmitResponse extends Component {
       name: '',
       rating: '',
       preference: '',
-      scores: [],
+      score: [],
+      loading: true,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  // componentDidMount() {
-  //   const score = this.props.firebase.firestore.collection('score');
-  //   score.on('calue', snapshot => {
-  //     let scores = snapshot.val();
-  //     let newState = [];
-  //     for (let score in scores) {
-  //       newState.push({
-  //         id: score,
-  //         name: scores[score].score,
-  //       });
-  //     }
-  //     this.setState({
-  //       scores: newState,
-  //     });
-  //   });
-  // }
+
+  componentDidUpdate() {
+    const score = firebase.firestore().collection('rating');
+
+    score.get().then(({ docs }) => {
+      docs.map(doc => console.log({ id: doc.id, ...doc.data() }));
+    });
+    // ('value', snapshot => {
+    //   let scores = snapshot.val();
+    //   let newState = [];
+    //   for (let score in scores) {
+    //     newState.push({
+    //       id: score,
+    //       name: scores[score].score,
+    //     });
+    //   }
+    //   this.setState({
+    //     scores: newState,
+    //   });
+    // });
+  }
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value,
@@ -170,4 +176,4 @@ class SubmitResponse extends Component {
     );
   }
 }
-export default withFirebase(SubmitResponse);
+export default SubmitResponse;

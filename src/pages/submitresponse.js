@@ -17,14 +17,18 @@ class SubmitResponse extends Component {
   }
 
   componentDidMount() {
+    let scores = [];
     const db = firebase.firestore();
     db.collection('rating')
       .get()
-      .then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          console.log(doc.data());
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          scores.push(doc.data());
         });
       });
+    this.setState({
+      scores: scores,
+    });
   }
 
   // componentDidMount() {
@@ -66,6 +70,7 @@ class SubmitResponse extends Component {
   }
 
   render() {
+    console.log(this.state.scores);
     return (
       <Layout>
         <Navigation />
@@ -119,8 +124,8 @@ class SubmitResponse extends Component {
                   onChange={this.handleChange}
                   value={this.state.rating}
                 >
-                  {/* {this.state.scores.map(score => {
-                    return <option value="0">{score.score}</option>;
+                  {/* {this.state.scores.map(s => {
+                    return <option value="0">{s.score}</option>;
                   })} */}
 
                   <option value="0">0</option>

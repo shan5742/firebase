@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { withFirebase } from '../Firebase';
+import * as ROUTES from '../../constants/routes';
 
 class UserList extends Component {
-  _initFirebase = false;
-
   constructor(props) {
     super(props);
 
@@ -14,34 +14,22 @@ class UserList extends Component {
     };
   }
 
-  firebaseInit = () => {
-    if (this.props.firebase && !this._initFirebase) {
-      this._initFirebase = true;
-
-      this.setState({ loading: true });
-
-      this.props.firebase.users().on('value', snapshot => {
-        const usersObject = snapshot.val();
-
-        const usersList = Object.keys(usersObject).map(key => ({
-          ...usersObject[key],
-          uid: key,
-        }));
-
-        this.setState({
-          users: usersList,
-          loading: false,
-        });
-      });
-    }
-  };
-
   componentDidMount() {
-    this.firebaseInit();
-  }
+    this.setState({ loading: true });
 
-  componentDidUpdate() {
-    this.firebaseInit();
+    this.props.firebase.users().on('value', snapshot => {
+      const usersObject = snapshot.val();
+
+      const usersList = Object.keys(usersObject).map(key => ({
+        ...usersObject[key],
+        uid: key,
+      }));
+
+      this.setState({
+        users: usersList,
+        loading: false,
+      });
+    });
   }
 
   componentWillUnmount() {
@@ -53,20 +41,23 @@ class UserList extends Component {
 
     return (
       <div>
-        <h2>Users</h2>
+        <h2 className="pb-8 pt-4">Users</h2>
         {loading && <div>Loading ...</div>}
-
         <ul>
           {users.map(user => (
-            <li key={user.uid}>
-              <span>
-                <strong>ID:</strong> {user.uid}
-              </span>
-              <span>
-                <strong>E-Mail:</strong> {user.email}
-              </span>
-              <span>
+            <li className="py-2" key={user.uid}>
+              <span className="pr-4">
                 <strong>Username:</strong> {user.username}
+              </span>
+              <span>
+                <Link
+                  to={{
+                    pathname: `${ROUTES.ADMIN}/${user.uid}`,
+                    state: { user },
+                  }}
+                >
+                  Responses
+                </Link>
               </span>
             </li>
           ))}

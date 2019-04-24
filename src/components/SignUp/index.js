@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
-import { navigate } from 'gatsby';
+import { Link, withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import * as ROLES from '../../constants/roles';
+
+const SignUpPage = () => (
+  <div>
+    <SignUpForm />
+  </div>
+);
 
 const INITIAL_STATE = {
+  username: '',
   email: '',
   passwordOne: '',
   passwordTwo: '',
+  isAdmin: false,
   error: null,
 };
 
@@ -21,6 +31,10 @@ const ERROR_MSG_ACCOUNT_EXISTS = `
   on your personal account page.
 `;
 
+const ERROR_MSG_INELIGIBLE = `
+  Unfortunaately you are not permitted to use our service. If you think this is a mistake please double check your details and try again.
+`;
+
 class SignUpFormBase extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +45,13 @@ class SignUpFormBase extends Component {
   onSubmit = event => {
     event.preventDefault();
 
-    const { email, passwordOne } = this.state;
+    const { username, email, passwordOne, isAdmin } = this.state;
+
+    const roles = {};
+
+    if (isAdmin) {
+      roles[ROLES.ADMIN] = ROLES.ADMIN;
+    }
 
     this.props.firebase.firestore
       .collection('emailList')
@@ -47,7 +67,9 @@ class SignUpFormBase extends Component {
                 return this.props.firebase
                   .user(authUser.user.uid)
                   .set({
+                    username,
                     email,
+                    roles,
                   });
               })
               .then(() => {
@@ -55,7 +77,7 @@ class SignUpFormBase extends Component {
               })
               .then(() => {
                 this.setState({ ...INITIAL_STATE });
-                navigate(ROUTES.REDIRECT);
+                this.props.history.push(ROUTES.VERIFY_EMAIL);
               })
               .catch(error => {
                 if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
@@ -65,7 +87,7 @@ class SignUpFormBase extends Component {
               });
           });
         } else {
-          console.log('No Result');
+          alert(ERROR_MSG_INELIGIBLE);
         }
       });
   };
@@ -79,20 +101,41 @@ class SignUpFormBase extends Component {
   };
 
   render() {
-    const { email, passwordOne, passwordTwo, error } = this.state;
+    const adminUser = this.props.firebase.firestore.collection(
+      'adminList',
+    );
+
+    console.log(adminUser);
+    const {
+      username,
+      email,
+      passwordOne,
+      passwordTwo,
+      isAdmin,
+      error,
+    } = this.state;
 
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
-      email === '';
+      email === '' ||
+      username === '';
 
     return (
       <form onSubmit={this.onSubmit}>
         <input
           className="block border border-grey-light w-full p-3 rounded mb-4"
+          name="username"
+          value={username}
+          onChange={this.onChange}
+          type="text"
+          placeholder="Full Name"
+        />
+        <input
+          className="block border border-grey-light w-full p-3 rounded mb-4"
           name="email"
           value={email}
-          onChange={this.onChange}
+          onChange={this.onChnage}
           type="text"
           placeholder="Email Address"
         />
@@ -112,6 +155,16 @@ class SignUpFormBase extends Component {
           type="password"
           placeholder="Confirm Password"
         />
+        <label>
+          Admin:
+          <input
+            name="isAdmin"
+            type="checkbox"
+            disabled={this.state.disabled}
+            checked={isAdmin}
+            onChange={this.onChangeCheckbox}
+          />
+        </label>
         <button
           className="w-full text-center py-3 rounded text-white hover:bg-green-dark focus:outline-none my-1 bg-green"
           disabled={isInvalid}
@@ -126,4 +179,17 @@ class SignUpFormBase extends Component {
   }
 }
 
-export default withFirebase(SignUpFormBase);
+const SignUpLink = () => (
+  <p>
+    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+  </p>
+);
+
+const SignUpForm = compose(
+  withRouter,
+  withFirebase,
+)(SignUpFormBase);
+
+export default SignUpPage;
+
+export { SignUpForm, SignUpLink };

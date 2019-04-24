@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'gatsby';
+import { Link } from 'react-router-dom';
 
 import { AuthUserContext } from '../Session';
 import SignOutButton from '../SignOut';
@@ -22,6 +22,14 @@ const NavigationAuth = ({ authUser }) => (
   <ul className="list-reset flex w-screen justify-around px-16 py-8 text-lg">
     <li className="mr-6">
       <Link
+        to={ROUTES.LANDING}
+        className="text-grey-darker hover:text-grey-darkest no-underline"
+      >
+        Landing
+      </Link>
+    </li>
+    <li className="mr-6">
+      <Link
         to={ROUTES.SUBMIT_RESPONSE}
         className="text-grey-darker hover:text-grey-darkest no-underline"
       >
@@ -30,10 +38,10 @@ const NavigationAuth = ({ authUser }) => (
     </li>
     <li className="mr-6">
       <Link
-        to={ROUTES.MY_RESPONSES}
+        to={ROUTES.RESPONSES}
         className="text-grey-darker hover:text-grey-darkest no-underline"
       >
-        MY Responses
+        Responses
       </Link>
     </li>
     {!!authUser.roles[ROLES.ADMIN] && (
@@ -59,7 +67,7 @@ const NavigationNonAuth = () => (
         to={ROUTES.LANDING}
         className="text-grey-darker hover:text-grey-darkest no-underline"
       >
-        HOME
+        Landing
       </Link>
     </li>
   </ul>

@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
-import { Link } from 'gatsby';
-import * as ROUTES from '../constants/routes';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
 
-const Redirect = () => (
-  <Fragment>
+const VerifyEmail = () => (
+  <div className="flex flex-col flex-1 max-w-xl mx-auto px-4 py-8 md:p-8 w-full h-screen w-screen items-center">
     <h1 className="mt-16">Thanks for signing up</h1>
     <h3 className="mt-2">
       You must verify your email before being able to login
@@ -13,11 +13,7 @@ const Redirect = () => (
         Go Back
       </Link>
     </button>
-  </Fragment>
-);
-
-export default () => (
-  <div className="flex flex-col flex-1 max-w-xl mx-auto px-4 py-8 md:p-8 w-full h-screen w-screen items-center">
-    <Redirect />
   </div>
 );
+
+export default VerifyEmail;

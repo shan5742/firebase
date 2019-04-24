@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
@@ -101,11 +101,6 @@ class SignUpFormBase extends Component {
   };
 
   render() {
-    const adminUser = this.props.firebase.firestore.collection(
-      'adminList',
-    );
-
-    console.log(adminUser);
     const {
       username,
       email,
@@ -160,7 +155,13 @@ class SignUpFormBase extends Component {
           <input
             name="isAdmin"
             type="checkbox"
-            disabled={this.state.disabled}
+            disabled={
+              this.props.firebase.firestore
+                .collection('adminList')
+                .where('email', '==', this.state.email)
+                ? false
+                : true
+            }
             checked={isAdmin}
             onChange={this.onChangeCheckbox}
           />
@@ -179,12 +180,6 @@ class SignUpFormBase extends Component {
   }
 }
 
-const SignUpLink = () => (
-  <p>
-    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-  </p>
-);
-
 const SignUpForm = compose(
   withRouter,
   withFirebase,
@@ -192,4 +187,4 @@ const SignUpForm = compose(
 
 export default SignUpPage;
 
-export { SignUpForm, SignUpLink };
+export { SignUpForm };

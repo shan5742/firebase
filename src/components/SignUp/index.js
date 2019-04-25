@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
@@ -19,6 +19,7 @@ const INITIAL_STATE = {
   passwordTwo: '',
   isAdmin: false,
   error: null,
+  disabled: true,
 };
 
 const ERROR_CODE_ACCOUNT_EXISTS = 'auth/email-already-in-use';
@@ -92,6 +93,26 @@ class SignUpFormBase extends Component {
       });
   };
 
+  adminCheck() {
+    const check = this.props.firebase.firestore.collection(
+      'adminList',
+    );
+    check
+      .where('email', '==', this.state.email)
+      .get()
+      .then(docsRef => {
+        if (!docsRef.empty) {
+          this.setState({
+            disabled: false,
+          });
+        } else {
+          this.setState({
+            disabled: true,
+          });
+        }
+      });
+  }
+
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -99,6 +120,10 @@ class SignUpFormBase extends Component {
   onChangeCheckbox = event => {
     this.setState({ [event.target.name]: event.target.checked });
   };
+
+  componentDidUpdate() {
+    this.adminCheck();
+  }
 
   render() {
     const {
@@ -130,7 +155,7 @@ class SignUpFormBase extends Component {
           className="block border border-grey-light w-full p-3 rounded mb-4"
           name="email"
           value={email}
-          onChange={this.onChnage}
+          onChange={this.onChange}
           type="text"
           placeholder="Email Address"
         />
@@ -155,13 +180,7 @@ class SignUpFormBase extends Component {
           <input
             name="isAdmin"
             type="checkbox"
-            disabled={
-              this.props.firebase.firestore
-                .collection('adminList')
-                .where('email', '==', this.state.email)
-                ? false
-                : true
-            }
+            disabled={this.state.disabled}
             checked={isAdmin}
             onChange={this.onChangeCheckbox}
           />
@@ -180,6 +199,12 @@ class SignUpFormBase extends Component {
   }
 }
 
+const SignUpLink = () => (
+  <p>
+    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+  </p>
+);
+
 const SignUpForm = compose(
   withRouter,
   withFirebase,
@@ -187,4 +212,4 @@ const SignUpForm = compose(
 
 export default SignUpPage;
 
-export { SignUpForm };
+export { SignUpForm, SignUpLink };

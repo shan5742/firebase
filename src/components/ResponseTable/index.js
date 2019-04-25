@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
 
-class Responses extends Component {
+class ResponseTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +20,7 @@ class Responses extends Component {
           rating: responses[response].rating,
           preference: responses[response].preference,
           respondant: responses[response].respondant,
+          timestamp: responses[response].timestamp,
         });
       }
       this.setState({
@@ -29,7 +30,6 @@ class Responses extends Component {
   }
 
   render() {
-    console.log(this.state.responses);
     return (
       <div className="flex flex-col flex-1 max-w-xl mx-auto px-4 py-8 md:p-8 w-full h-screen w-screen items-center">
         <table
@@ -46,6 +46,9 @@ class Responses extends Component {
               </th>
               <th className="py-4 px-6 bg-grey font-sans font-medium uppercase text-sm text-grey-darkest border-b border-grey-light">
                 Preference
+              </th>
+              <th className="py-4 px-6 bg-grey font-sans font-medium uppercase text-sm text-grey-darkest border-b border-grey-light">
+                Date Submitted
               </th>
             </tr>
           </thead>
@@ -66,6 +69,9 @@ class Responses extends Component {
                     <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
                       {response.preference}
                     </td>
+                    <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
+                      {response.timestamp}
+                    </td>
                   </tr>
                 );
             })}
@@ -76,4 +82,4 @@ class Responses extends Component {
   }
 }
 
-export default withFirebase(Responses);
+export default withFirebase(ResponseTable);

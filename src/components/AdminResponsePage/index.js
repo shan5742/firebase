@@ -5,7 +5,7 @@ import { withAuthorization, withEmailVerification } from '../Session';
 import * as ROLES from '../../constants/roles';
 import AdminResponseTable from '../AdminResponseTable';
 
-const AdminPage = () => (
+const AdminResponsePage = () => (
   <div>
     <div className="flex flex-col flex-1 max-w-xl mx-auto px-4 py-8 md:p-8 w-full h-screen w-screen items-center">
       <h1 className="mt-16">Admin</h1>
@@ -22,4 +22,4 @@ const condition = authUser =>
 export default compose(
   withEmailVerification,
   withAuthorization(condition),
-)(AdminPage);
+)(AdminResponsePage);

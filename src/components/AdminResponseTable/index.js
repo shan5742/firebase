@@ -20,6 +20,7 @@ class AdminResponses extends Component {
           rating: responses[response].rating,
           preference: responses[response].preference,
           respondant: responses[response].respondant,
+          timestamp: responses[response].timestamp,
         });
       }
       this.setState({
@@ -28,6 +29,10 @@ class AdminResponses extends Component {
     });
   }
   render() {
+    var timestamp = '1556189432051';
+    var myDate = new Date(timestamp);
+    var formatedTime = myDate.toJSON();
+    console.log(formatedTime);
     return (
       <div className="flex flex-col flex-1 max-w-xl mx-auto px-4 py-8 md:p-8 w-full h-screen w-screen items-center">
         <table
@@ -46,6 +51,9 @@ class AdminResponses extends Component {
                 Preference
               </th>
               <th className="py-4 px-6 bg-grey font-sans font-medium uppercase text-sm text-grey-darkest border-b border-grey-light">
+                Date Submitted
+              </th>
+              <th className="py-4 px-6 bg-grey font-sans font-medium uppercase text-sm text-grey-darkest border-b border-grey-light">
                 Respondant
               </th>
             </tr>
@@ -62,6 +70,9 @@ class AdminResponses extends Component {
                   </td>
                   <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
                     {response.preference}
+                  </td>
+                  <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
+                    {response.timestamp}
                   </td>
                   <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
                     {response.respondant}

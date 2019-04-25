@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-
+import { Link, withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
@@ -29,6 +29,7 @@ class PasswordForgetFormBase extends Component {
       .doPasswordReset(email)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
+        this.props.history.push(ROUTES.RESET_PASS);
       })
       .catch(error => {
         this.setState({ error });
@@ -61,7 +62,7 @@ class PasswordForgetFormBase extends Component {
           disabled={isInvalid}
           type="submit"
         >
-          Reset My Password
+          Reset Your Password
         </button>
 
         {error && <p>{error.message}</p>}
@@ -70,14 +71,11 @@ class PasswordForgetFormBase extends Component {
   }
 }
 
-const PasswordForgetLink = () => (
-  <p>
-    <Link to={ROUTES.PASSWORD_FORGET}>Forgot Password?</Link>
-  </p>
-);
-
 export default PasswordForgetPage;
 
-const PasswordForgetForm = withFirebase(PasswordForgetFormBase);
+const PasswordForgetForm = compose(
+  withRouter,
+  withFirebase,
+)(PasswordForgetFormBase);
 
-export { PasswordForgetForm, PasswordForgetLink };
+export { PasswordForgetForm };

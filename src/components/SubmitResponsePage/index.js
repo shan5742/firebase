@@ -6,7 +6,7 @@ import {
   withAuthorization,
   withEmailVerification,
 } from '../Session';
-import Submit from '../Submit';
+import SubmitForm from '../SubmitForm';
 
 const SubmitResponsePage = () => (
   <AuthUserContext.Consumer>
@@ -16,7 +16,7 @@ const SubmitResponsePage = () => (
           <h1 className="mt-16">Welcome, {authUser.username}</h1>
           <h3>Please fill out the form below</h3>
 
-          <Submit />
+          <SubmitForm />
         </div>
       </div>
     )}

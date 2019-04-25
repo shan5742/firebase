@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { withFirebase } from '../Firebase';
 
-class SubmitResponse extends Component {
+class SubmitForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +11,6 @@ class SubmitResponse extends Component {
       preference: [],
       nameDropdown: [],
       scores: [],
-      pick: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,6 +30,7 @@ class SubmitResponse extends Component {
       rating: this.state.rating,
       preference: this.state.preference,
       respondant: this.props.firebase.auth.currentUser.email,
+      timestamp: this.props.firebase.serverValue.TIMESTAMP,
     };
     responseSubmission.push(submission);
     this.setState({
@@ -49,7 +49,6 @@ class SubmitResponse extends Component {
       querySnapshot.forEach(function(doc) {
         scores.push(doc.data());
       });
-      console.log(_this);
       _this.setState({
         scores: scores,
       });
@@ -65,14 +64,10 @@ class SubmitResponse extends Component {
         nameDropdown: nameDropdown,
       });
     });
-
-    // this.setState({
-    //   respondant: this.props.firebase.auth.currentUser.email
-    // })
   }
 
   render() {
-    console.log(this.props.firebase.auth.currentUser);
+    console.log(this.props);
     return (
       <form
         onSubmit={this.handleSubmit}
@@ -176,4 +171,4 @@ class SubmitResponse extends Component {
   }
 }
 
-export default withFirebase(SubmitResponse);
+export default withFirebase(SubmitForm);

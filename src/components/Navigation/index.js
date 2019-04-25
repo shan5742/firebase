@@ -22,10 +22,10 @@ const NavigationAuth = ({ authUser }) => (
   <ul className="list-reset flex w-screen justify-around px-16 py-8 text-lg">
     <li className="mr-6">
       <Link
-        to={ROUTES.LANDING}
+        to={ROUTES.HOME}
         className="text-grey-darker hover:text-grey-darkest no-underline"
       >
-        Landing
+        Home
       </Link>
     </li>
     <li className="mr-6">
@@ -64,10 +64,10 @@ const NavigationNonAuth = () => (
   <ul className="list-reset flex justify-between px-16 py-8 text-2xl ">
     <li>
       <Link
-        to={ROUTES.LANDING}
+        to={ROUTES.HOME}
         className="text-grey-darker hover:text-grey-darkest no-underline"
       >
-        Landing
+        Home
       </Link>
     </li>
   </ul>

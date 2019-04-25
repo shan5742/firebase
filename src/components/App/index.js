@@ -2,15 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Navigation from '../Navigation';
-import LandingPage from '../Landing';
+import HomePage from '../Home';
 import SignUpPage from '../SignUp';
 import SignInPage from '../SignIn';
-import PasswordForgetPage from '../PasswordForget';
+
 import SubmitResponsePage from '../SubmitResponsePage';
 import ResponsesPage from '../ResponsesPage';
-import AdminPage from '../Admin';
-import VerifyEmail from '../VerifyEmail';
-import ResetPass from '../ResetPass';
+import AdminPage from '../AdminResponsePage';
+import VerifyEmail from '../VerifyEmailPage';
+import ResetPass from '../ResetPasswordPage';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
@@ -22,15 +22,11 @@ const App = () => (
 
       <hr />
 
-      <Route exact path={ROUTES.LANDING} component={LandingPage} />
+      <Route exact path={ROUTES.HOME} component={HomePage} />
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
       <Route path={ROUTES.VERIFY_EMAIL} component={VerifyEmail} />
       <Route path={ROUTES.RESET_PASS} component={ResetPass} />
-      <Route
-        path={ROUTES.PASSWORD_FORGET}
-        component={PasswordForgetPage}
-      />
       <Route
         path={ROUTES.SUBMIT_RESPONSE}
         component={SubmitResponsePage}

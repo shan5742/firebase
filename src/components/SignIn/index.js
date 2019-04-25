@@ -83,7 +83,7 @@ class SignInFormBase extends Component {
         <button
           type="submit"
           disabled={isInvalid}
-          className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
+          className="w-full text-center py-3 rounded bg-blue-dark text-white hover:bg-blue-darker focus:outline-none my-1"
         >
           Sign In
         </button>

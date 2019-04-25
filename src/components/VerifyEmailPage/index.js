@@ -8,7 +8,7 @@ const VerifyEmailPage = () => (
     <h3 className="mt-2">
       You must verify your email before being able to login
     </h3>
-    <button className="bg-green hover:bg-green-dark text-white font-bold py-2 px-4 text-xl rounded mt-8">
+    <button className="bg-blue-dark hover:bg-blue-darker text-white font-bold py-2 px-4 text-xl rounded mt-8">
       <Link to={ROUTES.HOME} className="text-white no-underline">
         Go Back
       </Link>

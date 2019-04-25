@@ -9,7 +9,8 @@ class SubmitForm extends Component {
       name: '',
       rating: '',
       preference: [],
-      nameDropdown: [],
+      nameListDropdown: [],
+      nameListDropdown2: [],
       scores: [],
     };
     this.handleChange = this.handleChange.bind(this);
@@ -43,7 +44,9 @@ class SubmitForm extends Component {
   componentDidMount() {
     const _this = this;
 
-    const getScores = this.props.firebase.getScores();
+    const getScores = this.props.firebase
+      .getScores()
+      .orderBy('score');
     getScores.get().then(function(querySnapshot) {
       let scores = [];
       querySnapshot.forEach(function(doc) {
@@ -54,14 +57,29 @@ class SubmitForm extends Component {
       });
     });
 
-    const fetchNames = this.props.firebase.grabNames();
-    fetchNames.get().then(function(querySnapshot) {
-      let nameDropdown = [];
+    const fetchNameList = this.props.firebase
+      .grabNameList()
+      .orderBy('name');
+    fetchNameList.get().then(function(querySnapshot) {
+      let nameListDropdown = [];
       querySnapshot.forEach(function(doc) {
-        nameDropdown.push(doc.data());
+        nameListDropdown.push(doc.data());
       });
       _this.setState({
-        nameDropdown: nameDropdown,
+        nameListDropdown: nameListDropdown,
+      });
+    });
+
+    const fetchNameList2 = this.props.firebase
+      .grabNameList2()
+      .orderBy('name');
+    fetchNameList2.get().then(function(querySnapshot) {
+      let nameListDropdown2 = [];
+      querySnapshot.forEach(function(doc) {
+        nameListDropdown2.push(doc.data());
+      });
+      _this.setState({
+        nameListDropdown2: nameListDropdown2,
       });
     });
   }
@@ -87,7 +105,7 @@ class SubmitForm extends Component {
               onChange={this.handleChange}
               value={this.state.name}
             >
-              {this.state.nameDropdown.map(n => {
+              {this.state.nameListDropdown.map(n => {
                 return <option value={n.name}>{n.name}</option>;
               })}
             </select>
@@ -145,7 +163,7 @@ class SubmitForm extends Component {
               onChange={this.handleChange}
               value={this.state.preference}
             >
-              {this.state.nameDropdown.map(n => {
+              {this.state.nameListDropdown2.map(n => {
                 return <option value={n.name}>{n.name}</option>;
               })}
             </select>
@@ -161,7 +179,7 @@ class SubmitForm extends Component {
           </div>
         </div>
         <button
-          class="bg-green hover:bg-green-dark text-white text-xl font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
+          class="bg-blue-dark hover:bg-blue-darker text-white text-xl font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
           type="submit"
         >
           Submit

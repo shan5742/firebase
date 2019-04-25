@@ -29,32 +29,28 @@ class AdminResponses extends Component {
     });
   }
   render() {
-    var timestamp = '1556189432051';
-    var myDate = new Date(timestamp);
-    var formatedTime = myDate.toJSON();
-    console.log(formatedTime);
     return (
-      <div className="flex flex-col flex-1 max-w-xl mx-auto px-4 py-8 md:p-8 w-full h-screen w-screen items-center">
+      <div className="flex flex-wrap overflow-hidden">
         <table
-          className="text-left m-4"
+          className="text-left mt-4 table-auto"
           style={{ borderCollapse: 'collapse' }}
         >
           <thead>
             <tr>
-              <th className="py-4 px-12 bg-grey font-sans font-medium uppercase text-md text-grey-darkest border-b border-grey-light">
+              <th className="py-4 md:px-6 sm:px-0 bg-blue-darker font-sans font-medium uppercase md:text-base sm:text-sm xs:text:xs  text-white border-b border-grey-light text-center w-1/5 overflow-hidden">
                 Name
               </th>
-              <th className="py-4 px-6 bg-grey font-sans font-medium uppercase text-sm text-grey-darkest border-b border-grey-light">
+              <th className="py-4 md:px-6 sm:px-0 bg-blue-darker font-sans font-medium uppercase md:text-base sm:text-sm xs:text:xs  text-white border-b border-grey-light text-center w-1/5 overflow-hidden">
                 Rating
               </th>
-              <th className="py-4 px-6 bg-grey font-sans font-medium uppercase text-sm text-grey-darkest border-b border-grey-light">
+              <th className="py-4 md:px-6 sm:px-0 bg-blue-darker font-sans font-medium uppercase md:text-base sm:text-sm xs:text:xs  text-white border-b border-grey-light text-center w-1/5 overflow-hidden">
                 Preference
               </th>
-              <th className="py-4 px-6 bg-grey font-sans font-medium uppercase text-sm text-grey-darkest border-b border-grey-light">
-                Date Submitted
-              </th>
-              <th className="py-4 px-6 bg-grey font-sans font-medium uppercase text-sm text-grey-darkest border-b border-grey-light">
+              <th className="py-4 md:px-6 sm:px-0 bg-blue-darker font-sans font-medium uppercase md:text-base sm:text-sm xs:text:xs  text-white border-b border-grey-light text-center w-1/5 overflow-hidden">
                 Respondant
+              </th>
+              <th className="py-4 md:px-6 sm:px-0 bg-blue-darker font-sans font-medium uppercase md:text-base sm:text-sm xs:text:xs  text-white border-b border-grey-light text-center w-1/5 overflow-hidden ">
+                Date Submitted
               </th>
             </tr>
           </thead>
@@ -62,20 +58,32 @@ class AdminResponses extends Component {
             {this.state.responses.map(response => {
               return (
                 <tr className="hover:bg-blue-lightest">
-                  <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest ">
+                  <td className="py-4 md:px-6 sm:px-0 border-b border-grey-light bg-grey text-black md:text-base sm:text-sm xs:text:xs text-center w-1/5 overflow-hidden">
                     {response.name}
                   </td>
-                  <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
+                  <td className="py-4 md:px-6 sm:px-0 border-b border-grey-light bg-grey text-grey-darkest md:text-base sm:text-sm xs:text:xs text-center w-1/5 overflow-hidden">
                     {response.rating}
                   </td>
-                  <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
+                  <td className="py-4 md:px-6 sm:px-0 border-b border-grey-light bg-grey text-grey-darkest md:text-base sm:text-sm xs:text:xs text-center w-1/5 overflow-hidden">
                     {response.preference}
                   </td>
-                  <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
-                    {response.timestamp}
-                  </td>
-                  <td className="py-4 px-6 border-b border-grey-light bg-grey-lighter text-grey-darkest text-center">
+                  
+                  <td className="py-4 md:px-6 sm:px-0 border-b border-grey-light bg-grey text-grey-darkest md:text-base sm:text-sm xs:text:xs text-center w-1/5 overflow-hidden">
                     {response.respondant}
+                  </td>
+                  <td className="py-4 md:px-6 sm:px-0 border-b border-grey-light bg-grey text-grey-darkest md:text-base sm:text-sm xs:text:xs text-center w-1/5 overflow-hidden ">
+                    {new Date(response.timestamp).toLocaleString(
+                      'en-GB',
+                      {
+                        timeZone: 'UTC',
+                        hour12: false,
+                        month: 'short',
+                        year: 'numeric',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      },
+                    )}
                   </td>
                 </tr>
               );

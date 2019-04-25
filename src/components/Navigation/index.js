@@ -19,58 +19,42 @@ const Navigation = () => (
 );
 
 const NavigationAuth = ({ authUser }) => (
-  <ul className="list-reset flex w-screen justify-around px-16 py-8 text-lg">
-    <li className="mr-6">
-      <Link
-        to={ROUTES.HOME}
-        className="text-grey-darker hover:text-grey-darkest no-underline"
-      >
-        Home
-      </Link>
-    </li>
-    <li className="mr-6">
-      <Link
-        to={ROUTES.SUBMIT_RESPONSE}
-        className="text-grey-darker hover:text-grey-darkest no-underline"
-      >
-        Submit Response
-      </Link>
-    </li>
-    <li className="mr-6">
-      <Link
-        to={ROUTES.RESPONSES}
-        className="text-grey-darker hover:text-grey-darkest no-underline"
-      >
-        Responses
-      </Link>
-    </li>
-    {!!authUser.roles[ROLES.ADMIN] && (
+  <div className="bg-blue">
+    <ul className="list-reset flex w-screen justify-around md:px-16 sm:px-4 xs:px-0 py-8 lg:text-xl md:text-lg sm:text-md xs:text-sm text-center">
+      <li className="mr-6" />
       <li className="mr-6">
         <Link
-          to={ROUTES.ADMIN}
-          className="text-grey-darker hover:text-grey-darkest no-underline"
+          to={ROUTES.SUBMIT_RESPONSE}
+          className="text-white hover:text-blue-lighter no-underline"
         >
-          All Responses
+          Submit Response
         </Link>
       </li>
-    )}
-    <li className="mr-6">
-      <SignOutButton />
-    </li>
-  </ul>
+      <li className="mr-6">
+        <Link
+          to={ROUTES.RESPONSES}
+          className="text-white hover:text-blue-lighter no-underline"
+        >
+          Responses
+        </Link>
+      </li>
+      {!!authUser.roles[ROLES.ADMIN] && (
+        <li className="mr-6">
+          <Link
+            to={ROUTES.ADMIN}
+            className="text-white hover:text-blue-lighter no-underline"
+          >
+            All Responses
+          </Link>
+        </li>
+      )}
+      <li className="mr-6">
+        <SignOutButton />
+      </li>
+    </ul>
+  </div>
 );
 
-const NavigationNonAuth = () => (
-  <ul className="list-reset flex justify-between px-16 py-8 text-2xl ">
-    <li>
-      <Link
-        to={ROUTES.HOME}
-        className="text-grey-darker hover:text-grey-darkest no-underline"
-      >
-        Home
-      </Link>
-    </li>
-  </ul>
-);
+const NavigationNonAuth = () => <div />;
 
 export default Navigation;

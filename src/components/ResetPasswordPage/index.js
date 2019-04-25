@@ -9,7 +9,7 @@ const ResetPasswordPage = () => (
       Please follow the instructions in your email to reset your
       password
     </h3>
-    <button className="bg-green hover:bg-green-dark text-white font-bold py-2 px-4 text-xl rounded mt-8">
+    <button className="bg-blue-dark hover:bg-blue-darker text-white font-bold py-2 px-4 text-xl rounded mt-8">
       <Link to={ROUTES.HOME} className="text-white no-underline">
         Go Back
       </Link>

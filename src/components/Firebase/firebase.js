@@ -106,7 +106,9 @@ class Firebase {
 
   // list of names for form dropdown
 
-  grabNames = () => this.firestore.collection('nameList');
+  grabNameList = () => this.firestore.collection('nameList');
+
+  grabNameList2 = () => this.firestore.collection('nameList2');
 
   // grab email whitelist
 

@@ -186,7 +186,7 @@ class SignUpFormBase extends Component {
           />
         </label>
         <button
-          className="w-full text-center py-3 rounded text-white hover:bg-green-dark focus:outline-none my-1 bg-green"
+          className="w-full text-center py-3 rounded text-white hover:bg-blue-darker focus:outline-none my-1 bg-blue-dark"
           disabled={isInvalid}
           type="submit"
         >

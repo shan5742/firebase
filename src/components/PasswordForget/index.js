@@ -58,7 +58,7 @@ class PasswordForgetFormBase extends Component {
           className="block border border-grey-light w-full p-3 rounded mb-4"
         />
         <button
-          className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
+          className="w-full text-center py-3 rounded bg-blue-dark text-white hover:bg-blue-darker focus:outline-none my-1"
           disabled={isInvalid}
           type="submit"
         >

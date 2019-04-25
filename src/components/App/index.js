@@ -17,7 +17,7 @@ import { withAuthentication } from '../Session';
 
 const App = () => (
   <Router>
-    <div>
+    <div className="bg-blue-lighter">
       <Navigation />
 
       <hr />
